@@ -10,7 +10,6 @@
 
 <!-- Stats Cards -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-    <!-- Total Pemesanan -->
     <div class="bg-white p-6 rounded-2xl shadow-card border border-gray-100 hover:shadow-card-hover transition">
         <div class="flex justify-between items-start">
             <div class="bg-pink-100 p-3 rounded-xl">
@@ -24,7 +23,6 @@
         <p class="text-gray-500 text-sm mt-1">Total Pemesanan</p>
     </div>
 
-    <!-- Total Produk -->
     <div class="bg-white p-6 rounded-2xl shadow-card border border-gray-100 hover:shadow-card-hover transition">
         <div class="flex justify-between items-start">
             <div class="bg-purple-100 p-3 rounded-xl">
@@ -38,7 +36,6 @@
         <p class="text-gray-500 text-sm mt-1">Total Produk</p>
     </div>
 
-    <!-- Pendapatan -->
     <div class="bg-white p-6 rounded-2xl shadow-card border border-gray-100 hover:shadow-card-hover transition">
         <div class="flex justify-between items-start">
             <div class="bg-yellow-100 p-3 rounded-xl">
@@ -52,7 +49,6 @@
         <p class="text-gray-500 text-sm mt-1">Pendapatan</p>
     </div>
 
-    <!-- Pertumbuhan -->
     <div class="bg-white p-6 rounded-2xl shadow-card border border-gray-100 hover:shadow-card-hover transition">
         <div class="flex justify-between items-start">
             <div class="bg-green-100 p-3 rounded-xl">
@@ -71,11 +67,15 @@
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
     <div class="bg-white p-6 rounded-2xl shadow-card border border-gray-100">
         <h4 class="font-bold text-lg mb-4 text-gray-800">Grafik Penjualan</h4>
-        <canvas id="salesChart" height="300"></canvas>
+        <div class="relative h-72">
+            <canvas id="salesChart"></canvas>
+        </div>
     </div>
     <div class="bg-white p-6 rounded-2xl shadow-card border border-gray-100">
         <h4 class="font-bold text-lg mb-4 text-gray-800">Jumlah Pesanan</h4>
-        <canvas id="ordersChart" height="300"></canvas>
+        <div class="relative h-72">
+            <canvas id="ordersChart"></canvas>
+        </div>
     </div>
 </div>
 
@@ -142,14 +142,15 @@
 
 @push('scripts')
 <script>
-// Grafik Penjualan (Line Chart) - SUDAH DIPERBAIKI!
-new Chart(document.getElementById('salesChart'), {
+// Grafik Penjualan
+const salesCtx = document.getElementById('salesChart').getContext('2d');
+new Chart(salesCtx, {
     type: 'line',
     data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
         datasets: [{
             label: 'Penjualan',
-            data: [4000, 3000, 5000, 4500, 6000, 5500], // ← INI YANG TADI HILANG!
+            data: [4000, 3000, 5000, 4500, 6000, 5500],
             borderColor: '#ec4899',
             backgroundColor: 'rgba(236, 72, 153, 0.1)',
             tension: 0.4,
@@ -169,14 +170,15 @@ new Chart(document.getElementById('salesChart'), {
     }
 });
 
-// Grafik Pesanan (Bar Chart) - SUDAH DIPERBAIKI!
-new Chart(document.getElementById('ordersChart'), {
+// Grafik Pesanan
+const ordersCtx = document.getElementById('ordersChart').getContext('2d');
+new Chart(ordersCtx, {
     type: 'bar',
-    data: {  // ← INI YANG TADI HILANG!
+    data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
         datasets: [{
             label: 'Pesanan',
-            data: [24, 18, 32, 28, 39, 35], // ← INI JUGA!
+            data: [24, 18, 32, 28, 39, 35],
             backgroundColor: [
                 'rgba(236, 72, 153, 0.8)',
                 'rgba(168, 85, 247, 0.8)',
