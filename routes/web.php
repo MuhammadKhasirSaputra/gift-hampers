@@ -6,24 +6,23 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
-// Redirect root ke login
 Route::get('/', fn() => redirect()->route('login'));
 
-// Routes yang butuh login
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
     
-    // CRUD Produk
+    // Produk
     Route::resource('products', ProductController::class);
-    
-    // Export Produk
     Route::get('/products/export/excel', [ExportController::class, 'exportExcel'])->name('products.export.excel');
     Route::get('/products/export/pdf', [ExportController::class, 'exportPdf'])->name('products.export.pdf');
     
     // Orders (Pemesanan)
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::resource('orders', OrderController::class);
+    
+    // ⚠️ TAMBAHKAN ROUTE INI (Update Status)
     Route::post('/orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+    
+    // Export Orders
     Route::get('/orders/export/excel', [OrderController::class, 'exportExcel'])->name('orders.export.excel');
     Route::get('/orders/export/pdf', [OrderController::class, 'exportPdf'])->name('orders.export.pdf');
     
